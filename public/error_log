@@ -1,0 +1,1 @@
+[12-Jun-2025 05:25:50 UTC] PHP Fatal error:  Cannot declare class App\Http\Controllers\Api\WhatsappController, because the name is already in use in /home/arenguoc/apireservasdev.arenase.com/app/Http/Controllers/WhatsappController.php on line 0

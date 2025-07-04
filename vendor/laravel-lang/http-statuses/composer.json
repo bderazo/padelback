@@ -1,0 +1,61 @@
+{
+    "name": "laravel-lang/http-statuses",
+    "description": "List of 78 languages for HTTP statuses",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "languages",
+        "lang",
+        "translations",
+        "messages",
+        "http",
+        "status"
+    ],
+    "authors": [
+        {
+            "name": "Andrey Helldar",
+            "email": "helldar@ai-rus.com"
+        },
+        {
+            "name": "Laravel-Lang Team",
+            "homepage": "https://github.com/Laravel-Lang"
+        }
+    ],
+    "require": {
+        "php": "^7.3 || ^8.0",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "laravel-lang/publisher": "^13.0",
+        "orchestra/testbench": "^5.0 || ^6.0 || ^7.0",
+        "phpunit/phpunit": "^9.5",
+        "symfony/var-dumper": "^5.0 || ^6.0"
+    },
+    "conflict": {
+        "laravel-lang/publisher": "<13.0 >=14.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "LaravelLang\\HttpStatuses\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests"
+        }
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "LaravelLang\\HttpStatuses\\ServiceProvider"
+            ]
+        }
+    }
+}
