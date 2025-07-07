@@ -12,7 +12,7 @@ class LicenseController extends Controller
         $data = $request->validate([
             'pin' => 'required',
             'sport' => 'required',
-            'duration' => 'required|in:7 días,15 días',
+            'duration' => 'required|in:7 días,30 días,365 días',
             'date_register' => 'required|date',
         ]);
 

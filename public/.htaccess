@@ -1,9 +1,20 @@
+<IfModule mod_headers.c>
+    Header always set Access-Control-Allow-Origin "https://padelfront-3624.web.app"
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+    Header always set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
+    Header always set Access-Control-Allow-Credentials "true"
+</IfModule>
+
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
 
     RewriteEngine On
+
+    # Manejar preflight OPTIONS requests correctamente
+    RewriteCond %{REQUEST_METHOD} OPTIONS
+    RewriteRule ^ - [L,R=200]
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

@@ -598,7 +598,6 @@ class ComposerStaticInitfe33f98a750b8c5a51b30c78bd3fab21
         'App\\Models\\Deporte' => __DIR__ . '/../..' . '/app/Models/Deporte.php',
         'App\\Models\\Establecimiento' => __DIR__ . '/../..' . '/app/Models/Establecimiento.php',
         'App\\Models\\EstablecimientoDeporte' => __DIR__ . '/../..' . '/app/Models/EstablecimientoDeporte.php',
-        'App\\Models\\EstablecimientoHorario' => __DIR__ . '/../..' . '/app/Models/EstablecimientoHorario.php',
         'App\\Models\\License' => __DIR__ . '/../..' . '/app/Models/License.php',
         'App\\Models\\Reserva' => __DIR__ . '/../..' . '/app/Models/Reserva.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',

@@ -39,7 +39,6 @@ return array(
     'App\\Models\\Deporte' => $baseDir . '/app/Models/Deporte.php',
     'App\\Models\\Establecimiento' => $baseDir . '/app/Models/Establecimiento.php',
     'App\\Models\\EstablecimientoDeporte' => $baseDir . '/app/Models/EstablecimientoDeporte.php',
-    'App\\Models\\EstablecimientoHorario' => $baseDir . '/app/Models/EstablecimientoHorario.php',
     'App\\Models\\License' => $baseDir . '/app/Models/License.php',
     'App\\Models\\Reserva' => $baseDir . '/app/Models/Reserva.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
