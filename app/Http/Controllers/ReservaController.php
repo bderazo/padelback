@@ -353,6 +353,23 @@ class ReservaController extends Controller
         return response()->json(['ok' => true, 'data' => $reservas]);
     }
 
+    public function listProximasReservas(Request $request)
+    {
+        try {
+            $hoy = now()->startOfDay(); // Fecha actual
+            $dias = $request->input('dias', 5);
+            $cincoDiasDespues = now()->addDays($dias)->endOfDay();
+
+            $reservas = Reserva::with(['cliente', 'cancha.establecimiento'])
+                ->whereBetween('fecha_reserva', [$hoy, $cincoDiasDespues])
+                ->get();
+
+            return $this->successResponse($reservas, 'Reservas de los próximos 5 días obtenidas', 200);
+        } catch (Exception $e) {
+            return $this->errorResponse($e->getMessage(), null, 500);
+        }
+    }
+
 
 
 }

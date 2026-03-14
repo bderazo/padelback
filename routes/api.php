@@ -27,6 +27,8 @@ use App\Http\Controllers\WhatsappController;
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     Route::get('/admins', [AuthController::class, 'getAdmins']);
 
 
@@ -104,7 +106,8 @@ Route::prefix('reservas')->middleware('auth:sanctum')->group(function () {
     Route::post('/{id}/cancel', [ReservaController::class, 'cancelReserva']);
     Route::put('/{id}/confirmar', [ReservaController::class, 'confirmar']);
     Route::put('/{id}/cancelar', [ReservaController::class, 'cancelar']);
-    Route::get('/historial', [ReservaController::class, 'historial']);
+    Route::get('/historial', [ReservaController::class, 'listHistorialReservas']);
+    Route::get('/proximas', [ReservaController::class, 'listProximasReservas']);
 });
 
 
@@ -134,7 +137,7 @@ Route::prefix('deportes')->middleware(['auth:sanctum', 'role:admin,superadmin,cl
     Route::get('/', [DeporteController::class, 'index']);
     Route::get('/{id}', [DeporteController::class, 'show']);
     Route::post('/', [DeporteController::class, 'store']);
-    Route::match(['POST', 'PUT'],'/{id}', [DeporteController::class, 'update']);
+    Route::match(['POST', 'PUT'], '/{id}', [DeporteController::class, 'update']);
     Route::delete('/{id}', [DeporteController::class, 'destroy']);
 });
 

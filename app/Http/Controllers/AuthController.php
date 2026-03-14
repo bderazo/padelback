@@ -10,6 +10,13 @@ use Illuminate\Validation\ValidationException;
 use App\Traits\ApiResponseTrait;
 use Exception;
 
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordResetMail;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+
+
 class AuthController extends Controller
 {
     use ApiResponseTrait;
@@ -117,4 +124,91 @@ class AuthController extends Controller
         return response()->json($admins);
     }
 
+    public function forgotPassword(Request $request, PasswordResetService $passwordResetService)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email|exists:users,email',
+            ]);
+
+            $success = $passwordResetService->sendResetLink($request->email);
+
+            if (!$success) {
+                return $this->errorResponse(
+                    'No se pudo enviar el enlace de recuperación',
+                    null,
+                    500
+                );
+            }
+
+            return $this->successResponse(
+                null, 
+                'Se ha enviado un enlace de recuperación a tu correo electrónico',
+                200
+            );
+
+        } catch (ValidationException $e) {
+            return $this->errorResponse(
+                'El correo electrónico proporcionado no existe en nuestro sistema',
+                $e->errors(),
+                422
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse(
+                'Ocurrió un error al procesar tu solicitud',
+                null,
+                500
+            );
+        }
+    }
+    public function resetPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:6|confirmed',
+            ]);
+
+            $passwordReset = DB::table('password_resets')
+                ->where('email', $request->email)
+                ->where('token', hash('sha256', $request->token))
+                ->first();
+
+            if (!$passwordReset) {
+                throw new \Exception('Token inválido o expirado');
+            }
+
+            // Verificar si el token expiró (ej. 60 minutos)
+            $tokenExpired = Carbon::parse($passwordReset->created_at)
+                ->diffInMinutes(Carbon::now()) > 60;
+
+            if ($tokenExpired) {
+                throw new \Exception('El enlace de recuperación ha expirado');
+            }
+
+            // Actualizar contraseña
+            $user = User::where('email', $request->email)->first();
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            // Eliminar token
+            DB::table('password_resets')
+                ->where('email', $request->email)
+                ->delete();
+
+            return $this->successResponse(
+                null,
+                'Contraseña actualizada correctamente',
+                200
+            );
+
+        } catch (Exception $e) {
+            return $this->errorResponse(
+                $e->getMessage(),
+                null,
+                400
+            );
+        }
+    }
 }
